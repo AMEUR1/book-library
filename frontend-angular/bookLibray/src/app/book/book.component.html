@@ -1,0 +1,87 @@
+<p>
+  
+  {{errorMsg | json}}
+</p>
+<div class="text-center mb-2">
+<form action="">
+  <div>
+    <input type="hidden" value="{{book.id}}">
+  </div>
+  <div >
+   
+     <mat-form-field class="example-full-width">
+        <input matInput  type="text" name="author"  [(ngModel)]="book.author" placeholder="Author book" >
+      </mat-form-field>
+  </div>
+  <div >
+
+     
+      <mat-form-field class="example-full-width">
+          <input matInput type="text" name="title"  [(ngModel)]="book.title" placeholder="Title book" >
+        </mat-form-field>
+  </div>
+  
+  
+    <button type="submit" *ngIf="!book.id" mat-stroked-button color="primary" (click)="addBook()">Add</button>
+    <button *ngIf="book.id" mat-stroked-button color="warn" (click)="updateBook()">Edit</button>
+</form>
+
+</div>
+
+  <!-- <table *ngIf="books" sortable border="1">
+    <tr>
+    <th>Id</th>
+    <th>Author</th>
+    <th>Title</th>
+    <th>Actions</th>
+    </tr>
+    <tr *ngFor="let book of books">
+    <td>{{book.id}}</td>
+    <td>{{book.author}}</td>
+    <td>{{book.title}}</td>
+    <td><button (click)="getBookById(book.id)">Edit</button> <button (click)="deleteBook(book.id)">Remove</button></td>
+  </tr>
+  </table> -->
+
+
+
+  <table mat-table [dataSource]="books" class="mat-elevation-z8">
+
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+    
+      <!-- Position Column -->
+      <ng-container matColumnDef="Id">
+        <th mat-header-cell *matHeaderCellDef> Id </th>
+        <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+      </ng-container>
+    
+    
+      <ng-container matColumnDef="Author">
+        <th mat-header-cell *matHeaderCellDef> Author </th>
+        <td mat-cell *matCellDef="let element"> {{element.author}} </td>
+      </ng-container>
+    
+     
+      <ng-container matColumnDef="Title">
+        <th mat-header-cell *matHeaderCellDef> Title </th>
+        <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+      </ng-container>
+    
+
+      <ng-container matColumnDef="Actions">
+          <th mat-header-cell *matHeaderCellDef> Actions </th>
+          <td mat-cell *matCellDef="let element"> 
+            <div>
+                <button mat-raised-button color="warn" class="mr-2" (click)="getBookById(element.id)">Edit</button>
+                <button mat-raised-button color="accent" (click)="deleteBook(element.id)">Remove</button>
+                
+            </div>
+          </td>
+        </ng-container>
+  
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+    
